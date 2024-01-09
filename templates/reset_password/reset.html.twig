@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{{"reinitpwd" | trans}}{% endblock %}
+
+{% block body %}
+    {{"reinitpwdh1" | trans | raw}}
+
+    {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword) }}
+        <button class="btn btn-primary">{{"reinit" | trans}}</button>
+    {{ form_end(resetForm) }}
+{% for locale in locales %}
+    {% if locale != app.request.locale %}
+        {{ 'langchoose' | trans}}
+        <a href="{{ path('change_locale', {'locale': locale}) }}"><img width="50" src="{{ asset('uploads/brochures/' ~ locale ~ '.png') }}" alt="{{ locale }}"></a>
+    {% endif %}
+{% endfor %}{% endblock %}

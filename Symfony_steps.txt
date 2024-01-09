@@ -1,0 +1,94 @@
+DANS wamp64 www
+composer create-project symfony/skeleton projet_symfony
+
+DANS projet_symfony
+composer require symfony/orm-pack
+composer require symfony/maker-bundle --dev
+composer require symfony/form
+composer require twig
+composer require --dev symfony/var-dumper
+composer require symfony/apache-pack
+composer require --dev symfony/profiler-pack
+composer require security
+composer require symfony/translation
+composer require symfony/asset
+
+création des controllers
+php bin/console make:controller HomeController
+php bin/console make:controller TaskController
+
+dans .env
+DATABASE_URL="mysql://root:@127.0.0.1:3306/todos?serverVersion=8.0.31&charset=utf8mb4"
+
+Création de classe Tasks
+php bin/console make:entity Tasks
+name 		string 100
+description  	text
+duedate 	date 
+priority 	string 75
+
+
+Création de la classe Categories
+php bin/console make:entity Categories
+name string 100
+
+Lier les deux classes
+php bin/console make:entity Tasks
+Category 	(relation) (Categories) (ManyToOne) (null ? yes) ($categories->getTasks() ? yes) (Categories)
+
+Créer la BDD à partir du modèle (classes PHP existantes)
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+
+Ajout manuel d'une tâche et d'une catégorie dans phpMyAdmin
+
+Dans TaskController.php
+
+    #[Route('/task', name: 'app_task')]
+    public function index(EntityManagerInterface $entityManager)
+    {
+        $tasks = $entityManager->getRepository(Tasks::class)->findAll();
+        return $this->render('task/index.html.twig', [
+            'tasks'=>$tasks
+        ]);
+    }
+
+Dans templates/task/index.html.twig
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TaskController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de la tâche</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td> {{ task.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+Résolution d'erreur : 
+
+php bin/console doctrine:schema:update --force

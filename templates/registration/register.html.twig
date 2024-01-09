@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {{"signup" | trans | raw}}
+
+
+    {{ form_errors(registrationForm) }}
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email, {'label':'mail' | trans }) }}
+        {{ form_row(registrationForm.nom, {'label':'Name' | trans }) }}
+        {{ form_row(registrationForm.prenom, {'label':'Firstname' | trans }) }}
+        {# {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }} #}
+
+        {{ form_row(registrationForm.password.first, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.password.second, {
+            label: 'Confirm Password'
+        }) }}
+
+        {{ form_row(registrationForm.agreeTerms) }}
+         {{ form_row(registrationForm.image) }}
+
+        <button type="submit" class="btn btn-lg btn-primary">{{'signup' | trans | raw}}</button>
+        <button type="submit" class="btn btn-lg btn-primary"><a href="{{ path('app_login') }}">{{"login" | trans}}</a></button>
+    {{ form_end(registrationForm) }}
+
+{% for locale in locales %}
+    {% if locale != app.request.locale %}
+        {{ 'langchoose' | trans}}
+        <a href="{{ path('change_locale', {'locale': locale}) }}"><img width="50" src="{{ asset('uploads/brochures/' ~ locale ~ '.png') }}" alt="{{ locale }}"></a>
+    {% endif %}
+{% endfor %}
+
+
+{% endblock %}

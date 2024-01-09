@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}L'Email de réinitilisation du mot de passe a été envoyé{% endblock %}
+
+{% block body %}
+    <p>
+        Si un compte marchant avec votre E-mail existe, alors un E--mail contenant un  lien que vous pourrez utiliser pour réinitialiser votre mot de passe vient juste d'être envoyé.
+        Ce lien s'expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p>Si vous ne recevez pas d'E-mail vérifiez vos Spam ou <a href="{{ path('app_forgot_password_request') }}">Réessayez</a>.</p>{% for locale in locales %}
+    {% if locale != app.request.locale %}
+        {{ 'langchoose' | trans}}
+        <a href="{{ path('change_locale', {'locale': locale}) }}">{{ locale }}</a>
+    {% endif %}
+{% endfor %}
+{% endblock %}

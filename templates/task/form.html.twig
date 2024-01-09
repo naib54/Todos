@@ -1,0 +1,17 @@
+{# templates/task/new.html.twig #}
+{% block body %}
+    {{ 'addTitle'| trans | raw }}
+    {{ form(taskForm) }}
+
+{% for locale in locales %}
+    {% if locale != app.request.locale %}
+        {{ 'langchoose' | trans}}
+        <a href="{{ path('change_locale', {'locale': locale}) }}"><img width="50" src="{{ asset('uploads/brochures/' ~ locale ~ '.png') }}" alt="{{ locale }}"></a>
+    {% endif %}
+{% endfor %}
+
+
+
+
+{% endblock %}
+

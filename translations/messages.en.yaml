@@ -1,0 +1,41 @@
+#Listing des tâches
+
+task : "<th>Tasks name</th><th>Description</th><th>Date</th><th>Priority</th><th>Modification</th><th>Delete</th> "
+delete : "Delete"
+modify : "Modify"
+addTask : "Add a task"
+listTask : "<h1>Tasks list</h1>"
+Listtask : "Tasks list"
+addTaskMessage : "Your task's been created successfully"
+deleteTaskMessage : "Your task's been deleted successfully"
+modifyTask : "Your task's been modified successfully"
+
+
+#Formulaire d'ajout de tache
+addTitle : "<h1>Add a task</h1>"
+
+#Modification d'une tache
+TaskModify : "<h1>Task modification</h1>"
+
+#Login
+disconnect : "Disconnect"
+youareconnected : "You are connected as"
+welcome : "Welcome !"
+login: "Log in"
+login1 : "Login !"
+mail : "Email"
+password : "Password"
+passwordforget : "Forgot password ?"
+
+#Register
+signup : "<h1>Sign up</h1>"
+name: "Name"
+firstname: "First name"
+
+#Passwordreset
+
+reinitpwd : "Reset your password"
+reinitpwdh1 : "<h1>Reset your password</h1>"
+reinit : "Reset"
+
+langchoose : "Choose your language"

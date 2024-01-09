@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"Listtask" | trans }}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { 
+        margin: 1em auto; 
+        /* max-width: 800px;  */
+        width: 95%; 
+        font: 18px/1.5 sans-serif; 
+    }
+    .example-wrapper code { 
+        background: #F5F5F5; 
+        padding: 2px 6px; 
+    }
+</style>
+
+<div class="example-wrapper">
+    {{'listTask' | trans | raw}}
+    <table id="table">
+        <thead>
+            <tr>
+                {{'task'| trans| raw }}
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.duedate|date('d-m-Y') }}</td>
+                    <td>{{ task.priority }}</td>
+                    
+                    <td><a href="{{ path('app_delete_task', {id:task.id}) }}">{{'delete' | trans}}</td>
+                    {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+                    <td><a href="{{ path('app_edit_task', {id:task.id}) }}">{{"modify" | trans}}</td>
+                    {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path ('app_add_task')}}">{{'addTask' | trans}}</a>
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+{% if is_granted('ROLE_ADMIN') %}
+<b>Tu es un administrateur</b>
+
+
+{% endif %}
+
+<img class="rounded-circle mb-3" style="width: 150px" src="{{ asset('uploads/brochures/' ~ app.user.getBrochureFilename) }}" alt="image">
+
+    {{app.user.getNom}} {{app.user.getPrenom}} <br>
+    {{ app.user.email }} <br>
+
+</div>
+
+{% for locale in locales %}
+    {% if locale != app.request.locale %}
+        {{ 'langchoose' | trans}}
+        <a href="{{ path('change_locale', {'locale': locale}) }}"><img width="50" src="{{ asset('uploads/brochures/' ~ locale ~ '.png') }}" alt="{{ locale }}"></a>
+    {% endif %}
+{% endfor %}
+
+
+
+{% endblock %}

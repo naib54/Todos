@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{{"login1" | trans}}{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            {{"youareconnected" | trans}} {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{{"disconnect" | trans}}</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">{{"login" | trans}}</h1>
+    <label for="inputEmail">{{"mail" | trans}}</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <label for="inputPassword">{{"password" | trans}}</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        {{"login" | trans}}
+    </button>
+    <button class="btn btn-lg btn-primary" type="submit">
+      <a href="{{ path('app_forgot_password_request') }}">{{"passwordforget" | trans}}</a>
+      </button>
+      <button class="btn btn-lg btn-primary" type="submit">
+      <a href="{{ path('app_register') }}">{{"signup" | trans | raw}}</a>
+      </button>
+   
+</form>{% for locale in locales %}
+    {% if locale != app.request.locale %}
+        {{ 'langchoose' | trans}}
+        <a href="{{ path('change_locale', {'locale': locale}) }}"><img width="50" src="{{ asset('uploads/brochures/' ~ locale ~ '.png') }}" alt="{{ locale }}"></a>
+    {% endif %}
+{% endfor %}
+{% endblock %}
